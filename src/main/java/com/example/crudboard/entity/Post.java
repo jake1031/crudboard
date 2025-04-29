@@ -1,10 +1,7 @@
 package com.example.crudboard.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +24,11 @@ public class Post {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
     // 기본 생성자
     public Post() {}
 
@@ -34,6 +36,5 @@ public class Post {
     public Post(String title, String content) {
         this.title = title;
         this.content = content;
-        this.createdAt = LocalDateTime.now(); // 생성 시 자동으로 현재 시간이 들어감
     }
 }
